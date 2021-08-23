@@ -261,7 +261,7 @@ return [
         ],
         [
             'text' => 'Productos',
-            // 'route'  => 'admin.productos.index',
+            'route'  => 'admin.productos.index',
             'icon' => 'fas fa-fw fa-lock',
         ],
         [

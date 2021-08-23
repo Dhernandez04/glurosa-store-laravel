@@ -40,7 +40,7 @@ class CategoriaController extends Controller
             'nombre'=>'required'
         ]);
         $categoria = Categoria::create($request->all());
-        return redirect()->route('admin.categorias.index')->with('info','La categoria se acctualizo con exito');;
+        return redirect()->route('admin.categorias.index')->with('info','La categoria se creo con exito');;
     }
 
     /**
@@ -79,7 +79,7 @@ class CategoriaController extends Controller
         ]);
 
         $categoria->update($request->all());
-        return redirect()->route('admin.categorias.edit',$categoria)->with('info','La categoria se acctualizo con exito');
+        return redirect()->route('admin.categorias.edit',$categoria)->with('info','La categoria se actualizo con exito');
     }
 
     /**

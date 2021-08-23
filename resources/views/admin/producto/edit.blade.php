@@ -1,0 +1,61 @@
+@extends('adminlte::page')
+
+@section('title', 'Dashboard')
+
+@section('content_header')
+    <h1>Editar producto</h1>
+@stop
+
+@section('content')
+@if (session('info'))
+
+    <div class="alert alert-success">
+        <strong>{{session('info')}}</strong>
+    </div>
+    
+@endif
+<div class="card">
+    <div class="card-body">
+        {!! Form::model($producto,['route'=>['admin.productos.update',$producto],'method'=>'put'])!!}
+        <div class="form-group">
+               
+            {!! Form::label("categoria", "Seleccionar categoria") !!}
+            {!! Form::select("cate_id", $categorias, null, ["class"=>'form-control']) !!}
+         </div>
+         <div class="form-group">
+                 {!! Form::label("nombre", "Nombre") !!}
+                {!! Form::text("nombre", null, ["class"=>'form-control', 'placeholder'=>'Ingrese el nombre del producto']) !!}
+             </div>
+             <div class="form-group">
+                 {!! Form::label("precio", "Precio") !!}
+                {!! Form::text("precio", null, ["class"=>'form-control', 'placeholder'=>'Ingrese el precio del producto']) !!}
+             </div>
+             <div class="form-group">
+                 {!! Form::label("oferta", "Oferta") !!}
+                {!! Form::text("oferta", null, ["class"=>'form-control', 'placeholder'=>'Ingrese la oferta del producto']) !!}
+             </div>
+             <div class="form-group">
+                 {!! Form::label("cantidad", "Cantidad") !!}
+                {!! Form::text("cantidad", null, ["class"=>'form-control', 'placeholder'=>'Ingrese la cantidad del producto']) !!}
+             </div>
+             <div class="form-group">
+                 {!! Form::label("nombre", "Descripcion") !!}
+                 {!! Form::textarea("descripcion", null, ["rows"=>3,"class"=>'form-control', 'placeholder'=>'Ingrese la descripcion']) !!}
+              </div>
+
+              {!! Form::submit("Actualizar producto", ["class"=>"btn btn-primary"]) !!}
+
+
+
+        {!! Form::close()!!}
+    </div>
+</div>
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
+@section('js')
+    <script> console.log('Hi!'); </script>
+@stop

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 
@@ -14,8 +15,8 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $producto = Producto::where('activo', '=', 1)->paginate(5);
-        return view('admin.categoria.index',compact('productos'));
+        $productos = Producto::where('activo', '=', 1)->paginate(5);
+        return view('admin.producto.index',compact('productos'));
     }
 
     /**
@@ -25,7 +26,8 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        //
+        $categorias = Categoria::pluck('nombre','id');
+        return view('admin.producto.create',compact('categorias'));
     }
 
     /**
@@ -36,7 +38,15 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre'=>'required',
+            'precio'=>'required',
+            'oferta'=>'required',
+            'cantidad'=>'required',
+            'cate_id'=>'required'
+        ]);
+        $producto = Producto::create($request->all());
+        return redirect()->route('admin.productos.index')->with('info','La producto se creo con exito');;
     }
 
     /**
@@ -47,7 +57,7 @@ class ProductoController extends Controller
      */
     public function show(Producto $producto)
     {
-        //
+        return view('admin.producto.show',compact('producto'));
     }
 
     /**
@@ -58,7 +68,9 @@ class ProductoController extends Controller
      */
     public function edit(Producto $producto)
     {
-        //
+        
+        $categorias = Categoria::pluck('nombre','id');
+        return view('admin.producto.edit',compact('categorias','producto'));
     }
 
     /**
@@ -70,7 +82,16 @@ class ProductoController extends Controller
      */
     public function update(Request $request, Producto $producto)
     {
-        //
+        $request->validate([
+            'nombre'=>'required',
+            'precio'=>'required',
+            'oferta'=>'required',
+            'cantidad'=>'required',
+            'cate_id'=>'required'
+        ]);
+
+        $producto->update($request->all());
+        return redirect()->route('admin.productos.edit',$producto)->with('info','La producto se actualizo con exito');
     }
 
     /**
@@ -81,6 +102,7 @@ class ProductoController extends Controller
      */
     public function destroy(Producto $producto)
     {
-        //
+        $producto->delete();
+        return redirect()->route('admin.productos.index',$producto)->with('delete','La producto se eliminó con exito');
     }
 }
