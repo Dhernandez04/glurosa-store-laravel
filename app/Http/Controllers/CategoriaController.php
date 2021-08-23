@@ -25,7 +25,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.categoria.create');
     }
 
     /**
@@ -36,7 +36,11 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre'=>'required'
+        ]);
+        $categoria = Categoria::create($request->all());
+        return redirect()->route('admin.categorias.index')->with('info','La categoria se acctualizo con exito');;
     }
 
     /**
@@ -47,7 +51,7 @@ class CategoriaController extends Controller
      */
     public function show(Categoria $categoria)
     {
-        //
+        return view('admin.categoria.show',compact('categoria'));
     }
 
     /**
@@ -58,7 +62,7 @@ class CategoriaController extends Controller
      */
     public function edit(Categoria $categoria)
     {
-        //
+        return view('admin.categoria.edit',compact('categoria'));
     }
 
     /**
@@ -70,7 +74,12 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, Categoria $categoria)
     {
-        //
+        $request->validate([
+            'nombre'=>'required'
+        ]);
+
+        $categoria->update($request->all());
+        return redirect()->route('admin.categorias.edit',$categoria)->with('info','La categoria se acctualizo con exito');
     }
 
     /**
@@ -81,6 +90,7 @@ class CategoriaController extends Controller
      */
     public function destroy(Categoria $categoria)
     {
-        //
+        $categoria->delete();
+        return redirect()->route('admin.categorias.index',$categoria)->with('delete','La categoria se eliminó con exito');
     }
 }
