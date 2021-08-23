@@ -14,7 +14,8 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+        $categorias = Categoria::where('activo', '=', 1)->paginate(5);
+        return view('admin.categoria.index',compact('categorias'));
     }
 
     /**
